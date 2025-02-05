@@ -5,11 +5,18 @@ export async function changeOrderStatus(req: Request, res: Response) {
   try {
     const { orderId } = req.params
     const { status } = req.body
-    await Order.findByIdAndUpdate(orderId, { status })
+    if (!["WAITING", "IN_PRODUCTION", "DONE"].includes(status.toUpperCase())) {
+      res.status(400).send({
+        error: "Invalid status"
+      })
+      return
+    }
+    await Order.findByIdAndUpdate(orderId, { status: status.toUpperCase() })
     res.sendStatus(204)
-  } catch {
+  } catch (err) {
     res.status(500).json({
-      error: 'Failed to update order'
+      error: 'Failed to update order',
+      err
     })
   }
 }
