@@ -6,7 +6,7 @@ export async function createCategory(req: Request, res: Response) {
 
     const { name, icon } = req.body
     if (!name || !icon) {
-      return res.status(400).json({
+      res.status(400).json({
         error: 'Name and icon must be present'
       })
     }

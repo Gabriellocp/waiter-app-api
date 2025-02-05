@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Product } from "../../models/Product";
 
-export async function createproduct(req: Request, res: Response) {
+export async function createProduct(req: Request, res: Response) {
   try {
     const imagePath = req.file?.filename
     const {
